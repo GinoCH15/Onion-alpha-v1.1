@@ -1,0 +1,151 @@
+extends ../layouts/login
+
+block content
+
+  // ==========  Login wrapper ==========
+  // ========================  Main header ========================
+  section.main-header(id='flag' data-flag = flag style='background-image:url(assets/images/gallery-2.jpg)')
+    header
+      .container.text-center
+        h2.h2.title ¡Bienvenido a Vulpus!  
+        ol.breadcrumb.breadcrumb-inverted
+          li
+            a(href='/')
+              span.icon.icon-home
+          li
+            a.active(href='/login') Regístrate o Inicia sesión
+  // ========================  Login & register ========================
+  section.login-wrapper.login-wrapper-page
+    .container
+      header.hidden
+        h3.h3.title Iniciar sesión
+      .row
+        // === left content ===
+        .col-md-6.col-md-offset-3
+          // === login-wrapper ===
+          .login-wrapper
+            .white-block
+              // signin
+              .login-block.login-block-signin(id='sign-in')
+                .h4
+                  | Iniciar sesión 
+                  a.btn.btn-main.btn-xs.btn-register.pull-right(href='javascript:void(0);') Registrar
+                hr
+                form(method="POST" action="/ingresar")
+                  .row
+                    .col-md-12
+                      .form-group
+                        input.form-control(type='text' name='email' placeholder='Ingresa tu correo electrónico' required='')
+                    .col-md-12
+                      .form-group
+                        input#password.form-control(type='password' name='password' placeholder='Ingresa tu contraseña' required='' style='padding-right: 40px;')
+                        span.icon.icon-eye.cursor-pointer.eye-input(onclick='mostrarContrasena("password")' toggle="#password")
+                    .col-xs-12.text-center
+                      button.btn.btn-main(style='margin: 10px 16px 0' type="submit") Iniciar sesión
+                      a.btn.btn-main(style='margin: 10px 16px 0; background-color:#3a3d45' href='/recuperar') Recuperar contraseña
+              // /signin
+              // signup
+              .login-block.login-block-signup(id='sign-up')
+                row(style='display: flex; justify-content: space-between;')
+                  .h4.col-md-9(style='padding:0 15px 0 0; margin-bottom: 0')
+                    | A UN CLICK DE SUBIR TU MUEBLE
+                  .col-md-3(style='padding:0;')
+                    a.btn.btn-main.btn-xs.btn-login.pull-right(href='javascript:void(0);') INICIAR SESIÓN
+                hr
+                form#sign-up(method="POST" action="/registrar" onsubmit='return checkForm(this)')
+                  .row
+                    .col-md-12
+                      .form-group
+                        label(for="name") Nombres y apellidos* 
+                        input#name.form-control(type='text' name='name' placeholder='Ingresa tus nombres y apellidos' maxlength="50" required='')
+                    .col-md-12
+                      .form-group
+                        label(for="phone") Número de teléfono*
+                        input#phone.form-control(type='text' name='phone' oninput="this.value=this.value.replace(/[^0-9]/g,'');" minlength="9" maxlength="9" placeholder='Ingresa tu celular' onkeyup='validatePhone()' required='')
+                    .col-md-12
+                      .form-group
+                        label(for="age") Edad*
+                        -
+                          let today = new Date()
+                          let todayYear = today.getFullYear()
+                          let todayMonth = today.getMonth() + 1
+                          let todayDay = today.getDate()
+                          if (todayDay.toString().length == 1) todayDay = "0" + todayDay
+                          if (todayMonth.toString().length == 1) todayMonth = "0" + todayMonth
+                          let maxDate = `${todayYear-18}-${todayMonth}-${todayDay}`;
+                        input#age.form-control(type='date' placeholder='Ingesa edad' name='age' max=maxDate required='')
+                    .col-md-12
+                      .form-group
+                        label(for="email") Correo electrónico*
+                        input#email.form-control(type='email' name='email' parsley-type="email" placeholder='Ingresa tu correo electrónico*' required='')
+                    .col-md-12
+                      .form-group
+                        label(for="password-r") Contraseña*
+                        span(style='margin: 10px; font-size: 11px; vertical-align: middle;') (Deberia contener una mayúscula)
+                        input#password-r.form-control(type='password' name='password' placeholder='Ingresa tu contraseña' required='')
+                        span.icon.icon-eye.cursor-pointer.eye-input(onclick='mostrarContrasena("password-r")' toggle="#password")
+                    .col-md-12
+                      .form-group
+                        label(for="password-r2") Confirmar contraseña*
+                        input#password-r2.form-control(type='password' name='password2' placeholder='Confirma tu contraseña' required='')
+                        span.icon.icon-eye.cursor-pointer.eye-input(onclick='mostrarContrasena("password-r2")' toggle="#password")
+                    .col-md-12
+                      hr
+                      span.checkbox
+                        input#usagePolicies(type='checkbox' name="usagePolicies")
+                        label(for='usagePolicies')
+                          | Acepto las 
+                          a(href='https://drive.google.com/file/d/1FU24ZHmQ_aEDNUEn2KG5K9Y3cXbqyQrx/view?usp=sharing' target="_blank") Políticas de uso*
+                      hr
+                    .col-md-12
+                      button.btn.btn-main.btn-block(type="submit") Registrarme
+              // /signup
+          // /login-wrapper
+        // /col-md-6
+
+  script.
+    function mostrarContrasena(id){
+        var tipo = document.getElementById(id);
+        if(tipo.type == "password"){
+            tipo.type = "text";
+        }else{
+            tipo.type = "password";
+        }
+    }
+
+    function validatePhone(){
+      let input = document.getElementById('phone')
+      if(input.value.length < 9) {
+        input.setCustomValidity('Este valor es muy corto. La longitud es de 9 caracteres.')
+      } else{
+        input.setCustomValidity('')
+      }
+    }
+
+    function checkForm(form){
+
+      let pssw = document.getElementById("password-r")
+      let pssw2 = document.getElementById("password-r2")
+      let validate = true
+
+      if(pssw.value != pssw2.value) {
+        event.preventDefault();
+        badForm('Las contraseñan no coinciden');
+        validate = false;
+      }
+
+      if(!form.usagePolicies.checked) {
+        event.preventDefault();
+        badForm('Por favor debe aceptar las Políticas de uso');
+        form.usagePolicies.focus();
+        validate = false;
+      }
+      
+      /*if(!form.privacyPolicies.checked) {
+        event.preventDefault();
+        badForm('Por favor debe aceptar las políticas de privacidad');
+        form.privacyPolicies.focus();
+        return false;
+      }*/
+      return validate;
+    }

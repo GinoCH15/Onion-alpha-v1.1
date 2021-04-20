@@ -1,0 +1,60 @@
+// ================== Footer  ==================
+footer
+  .container
+    // footer showroom
+    .footer-showroom
+      .row
+        .col-sm-7
+          //h2 Visita Vulpus
+          img.style-logo(style='height: 60px' src='/images/vulpus/Logotipo-blanco_Vulpus_2021.png' alt='')
+          img.style-logo(style='height: 60px; margin-left: -5px;' src='/images/vulpus/Logotipo_nombre2_2021.png' alt='')
+          p.footer-address(style='color: white') Dirección: Surco - Lima, Perú
+        .col-sm-5(style='color: white')
+          p Horario de atención:
+          p.footer-schedule Lunes - Viernes (8:00 a.m. - 18:00 p.m.) |
+          p.footer-schedule Sábado y Domingo (8:00 a.m. - 4:00 p.m.)
+          .call-us.h4
+            span.icon.icon-phone-handset
+            |  333.278.06622
+    // footer social
+    .footer-social
+      .row
+        .col-sm-6(style='color: white')
+          //a(href='#' target='_blank')
+            i.fa.fa-download
+            |  Download Mobel
+          //|  &nbsp; | &nbsp; 
+          a(href='https://drive.google.com/file/d/1FU24ZHmQ_aEDNUEn2KG5K9Y3cXbqyQrx/view?usp=sharing' target="_blank" style='color: white') Políticas de uso
+          |  &nbsp; | &nbsp; 
+          a(style='color: white') © Copyright 2021
+        .col-sm-6.links(style='color: white')
+          ul
+            li
+              a(href='https://www.facebook.com/vulpusperu/' target="_blank" style='color: white')
+                i.fa.fa-facebook
+            li
+              a(href='https://instagram.com/vulpus.pe?igshid=1g30orhd3asfl' target="_blank" style='color: white')
+                i.fa.fa-instagram
+            li
+              a(href='https://www.linkedin.com/company/vulpusperu' target="_blank" style='color: white')
+                i.fa.fa-linkedin
+            li
+              a(href='https://twitter.com/vulpusperu?s=09' target="_blank" style='color: white')
+                i.fa.fa-twitter
+  style(scoped='').
+    .footer-schedule {
+      margin-left: 20px;
+    }
+
+    .footer-address{
+      margin: 32px 0 0 48px;
+    }
+
+    @media (max-width: 766px){
+      .footer-schedule {
+        margin-left: 0px;
+      }
+      .footer-address {
+        margin: 10px 0 0 0;
+      }
+    }
