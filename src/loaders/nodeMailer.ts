@@ -29,7 +29,7 @@ export async function plainMailService(from: string, to: string, subject: string
   }
 
 }
-export async function htmlnMailService(from: string, to: string, subject: string, html:string):Promise<any> 
+export async function htmlMailService(from: string, to: string, subject: string, html:string):Promise<any> 
 {
   try {
     const mailOptions = {

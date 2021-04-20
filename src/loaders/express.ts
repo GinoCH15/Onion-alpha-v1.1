@@ -53,7 +53,6 @@ export async function startServer(){
   //Routes
   app.use('/', homeRouter);
   app.use('/', accessRouter);
-
   app.use('/', express.static(path.join(__dirname, '../public'), { maxAge: 31557600000 }));
   app.set('views', path.join(__dirname,'../views'));
 

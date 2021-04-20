@@ -3,6 +3,7 @@ import accessController from '../controllers/access-controller'
 import {isLogged} from '../middleware/auth'
 import { isEmail } from '../middleware/isEmail';
 import { validateRegister } from '../middleware/validateRegister';
+import { validateReset } from '../middleware/validateReset';
 
 const router: Router = Router();
 
@@ -12,7 +13,7 @@ router.post('/registrar', [validateRegister], accessController.postSignUp);
 router.get('/recuperar', accessController.getRecuperate);
 router.post('/recuperar', accessController.postRecuperate);
 router.get('/reiniciar/:token', accessController.getReset);
-router.post('/reiniciar/:token', accessController.postReset);
+router.post('/reiniciar/:token', [validateReset], accessController.postReset);
 router.get('/salir', accessController.logout);
 
 export default router;

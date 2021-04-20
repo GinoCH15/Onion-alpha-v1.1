@@ -7,7 +7,9 @@ export interface IUser extends Document {
   type: Number;
   emailToken: string;
   expireToken: string;
-  comparePassword: (password: string) => Promise<Boolean>
+  comparePassword: (password: string) => Promise<Boolean>;
+  createToken: () => Promise<string>;
+  getDateOfExpireToken: (length: number) => Promise<string>;
 };
 
 const userSchema = new Schema <IUser>({
@@ -57,4 +59,29 @@ userSchema.methods.comparePassword = async function(password: string): Promise<B
   return true
 };
 
+userSchema.methods.getDateOfExpireToken = async function(): Promise<string> {
+  try {
+    const today =  new Date();
+    today.setDate(today.getDate() + 1);
+    return today.toString();
+  } catch (err) {
+    throw "Error al generar el tiempo de expiración del token, intentelo más tarde";
+  }
+};
+
+userSchema.methods.createToken = async function(length: number): Promise<string> {
+  try{
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+
+  }catch(error){
+    throw "Error al generar el token de validación, vuelva a intentarlo más tarde.";
+  }
+};
 export default model<IUser>("User", userSchema);
