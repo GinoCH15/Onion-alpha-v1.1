@@ -63,6 +63,7 @@ class AccessController {
         name: body.name,
         type: 1
       })
+      await newUser.save()
       return req.logIn(newUser, function(err:any) {
         if (err) {
           throw "Ha ocurrido un error interno al registrar la cuenta, intenlo más tarde.";
@@ -73,8 +74,7 @@ class AccessController {
   
     }catch(error){
       req.flash('errors', error.message);
-      return res.render('Access/login', {flag: 1})
-      //return res.redirect('back');
+      return res.redirect('back');
     }
   }
 
